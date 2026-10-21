@@ -1,0 +1,14 @@
+{% extends "base.html" %}{% block title %}{{ page.title }}{% endblock %}
+{% block content %}<article>
+    <h1>{{ page.title }}</h1>
+    <p class="meta"><time datetime="{{ page.date }}">{{ page.date }}</time> · {{ page.reading_time }} min read
+        {%- if page.taxonomies.tags %} ·{% for tag in page.taxonomies.tags %} <a
+            href="{{ get_taxonomy_url(kind="tags", name=tag) }}">#{{ tag }}</a>{% endfor %}{% endif %}</p>
+    {{ page.content | safe }}
+</article>
+<footer>
+    <p>Paganel is open source: <a href="https://github.com/stanstork/paganel">github.com/stanstork/paganel</a>.
+        Questions, bugs or a migration story? Email <a href="mailto:stan@paganel.dev">stan@paganel.dev</a>.
+        New posts arrive via <a href="{{ get_url(path='atom.xml') }}">RSS</a>.</p>
+</footer>
+{% endblock %}

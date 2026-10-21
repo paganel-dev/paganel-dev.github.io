@@ -1,0 +1,13 @@
+base_url = "https://paganel-dev.github.io"
+title = "Paganel"
+description = "Copies your tables between systems, and tells you row by row if a copy ever stops matching."
+generate_feeds = true
+taxonomies = [{ name = "tags", feed = true }]
+
+[markdown]
+
+[markdown.highlighting]
+light_theme = "catppuccin-latte"
+dark_theme = "catppuccin-mocha"
+
+[extra]

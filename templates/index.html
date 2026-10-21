@@ -1,0 +1,15 @@
+{% extends "base.html" %}{% block nav_home %}{% endblock %}{% block content %}
+<header class="hero">
+    {% include "partials/logo.html" %}
+    <h1>{{ config.title }}</h1>
+    <p>{{ config.description }}</p>
+    <p class="next"><span>Next:</span> keeping those copies in sync continuously, with the same row-level check.</p>
+    <p class="cta"><a href="https://github.com/stanstork/paganel#quick-start">Quickstart →</a></p>
+</header>
+{% set blog = get_section(path="blog/_index.md") %}
+<h2>Posts</h2>
+<ul>{% for p in blog.pages %}<li>{{ p.date }} · <a href="{{ p.permalink }}">{{ p.title }}</a></li>{% endfor %}</ul>
+<footer>
+    <p>Questions or feedback? <a href="mailto:stan@paganel.dev">stan@paganel.dev</a></p>
+</footer>
+{% endblock %}

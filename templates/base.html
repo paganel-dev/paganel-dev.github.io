@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>{% block title %}{{ config.title }}{% endblock %}</title>
+    {%- set meta_title = config.title -%}
+    {%- set meta_description = config.description -%}
+    {%- set og_type = "website" -%}
+    {%- if page -%}
+    {%- set meta_title = page.title -%}
+    {%- set meta_description = page.description | default(value=config.description) -%}
+    {%- set og_type = "article" -%}
+    {%- endif %}
+    <meta name="description" content="{{ meta_description }}">
+    {% if current_url %}<link rel="canonical" href="{{ current_url }}">
+    <meta property="og:url" content="{{ current_url }}">
+    {% endif %}<meta property="og:site_name" content="{{ config.title }}">
+    <meta property="og:type" content="{{ og_type }}">
+    <meta property="og:title" content="{{ meta_title }}">
+    <meta property="og:description" content="{{ meta_description }}">
+    <meta property="og:image" content="{{ get_url(path='og.png') }}">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    {% if page and page.date %}<meta property="article:published_time" content="{{ page.date }}">
+    {% endif -%}
+    <link rel="icon" href="{{ get_url(path='favicon.svg') }}" type="image/svg+xml">
+    <link rel="alternate" type="application/atom+xml" title="Paganel" href="{{ get_url(path='atom.xml') }}">
+    <style>
+        :root {
+            --bg: #fbfbfe;
+            --text: #1e1e2e;
+            --muted: #5c5c78;
+            --accent: #6667AB;
+            --accent-strong: #4f5096;
+            --code-bg: #efeff8;
+            --border: #e0e0ee;
+            color-scheme: light
+        }
+
+        @media(prefers-color-scheme:dark) {
+            :root {
+                --bg: #14141f;
+                --text: #e4e4f2;
+                --muted: #a0a0bc;
+                --accent: #A5A6F6;
+                --accent-strong: #c4c5fa;
+                --code-bg: #1e1e2e;
+                --border: #2a2a3c;
+                color-scheme: dark
+            }
+        }
+
+        body {
+            max-width: 42rem;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            font: 17px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            color: var(--text);
+            background: var(--bg)
+        }
+
+        a {
+            color: var(--accent);
+            text-underline-offset: .15em
+        }
+
+        a:hover {
+            color: var(--accent-strong)
+        }
+
+        ::selection {
+            background: var(--accent);
+            color: var(--bg)
+        }
+
+        h1,
+        h2,
+        h3 {
+            line-height: 1.25
+        }
+
+        small,
+        time {
+            color: var(--muted)
+        }
+
+        blockquote {
+            margin: 1.5rem 0;
+            padding-left: 1rem;
+            border-left: 3px solid var(--accent);
+            color: var(--muted)
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px
+        }
+
+        hr {
+            border: 0;
+            border-top: 1px solid var(--border)
+        }
+
+        pre {
+            overflow-x: auto;
+            padding: .8rem;
+            border-radius: 4px;
+            background: var(--code-bg)
+        }
+
+        code,
+        pre {
+            font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace
+        }
+
+        code {
+            font-size: .9em
+        }
+
+        pre code {
+            font-size: .8em;
+            line-height: 1.5
+        }
+
+        :not(pre)>code {
+            padding: .1em .3em;
+            border-radius: 3px;
+            background: var(--code-bg)
+        }
+
+        nav {
+            margin-bottom: 2rem;
+            padding-bottom: .75rem;
+            border-bottom: 1px solid var(--border)
+        }
+
+        nav a {
+            margin-right: 1rem;
+            text-decoration: none
+        }
+
+        nav .home {
+            font-weight: bold;
+            color: var(--text)
+        }
+
+        footer {
+            margin-top: 3rem;
+            padding-top: .75rem;
+            border-top: 1px solid var(--border);
+            color: var(--muted);
+            font-size: .9em
+        }
+
+        .meta {
+            color: var(--muted);
+            font-size: .9em
+        }
+
+        .meta a {
+            text-decoration: none
+        }
+
+        .zola-anchor {
+            margin-left: .4rem;
+            color: var(--muted);
+            text-decoration: none;
+            opacity: 0
+        }
+
+        h2:hover .zola-anchor,
+        h3:hover .zola-anchor,
+        .zola-anchor:focus {
+            opacity: 1
+        }
+
+        @media(hover:none) {
+            .zola-anchor {
+                opacity: .5
+            }
+        }
+
+        .hero {
+            text-align: center;
+            margin: 3rem 0 2.5rem
+        }
+
+        .hero svg {
+            width: 7rem;
+            height: 7rem;
+            color: var(--accent)
+        }
+
+        .hero h1 {
+            margin: .5rem 0 .25rem
+        }
+
+        .hero p {
+            color: var(--muted)
+        }
+
+        .hero p {
+            max-width: 34rem;
+            margin-left: auto;
+            margin-right: auto;
+            text-wrap: balance
+        }
+
+        .hero .next {
+            font-size: .82em
+        }
+
+        .hero .next span {
+            color: var(--accent);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: .06em;
+            font-size: .85em
+        }
+
+        .hero .cta a {
+            display: inline-block;
+            margin-top: .5rem;
+            padding: .5rem 1.1rem;
+            border-radius: 6px;
+            background: var(--accent);
+            color: var(--bg);
+            font-weight: 600;
+            text-decoration: none
+        }
+
+        .hero .cta a:hover {
+            background: var(--accent-strong)
+        }
+    </style>
+</head>
+
+<body>
+    <nav>{% block nav_home %}<a class="home" href="{{ get_url(path="/") }}">Paganel</a>{% endblock %}<a href="https://github.com/stanstork/paganel">GitHub</a><a
+            href="{{ get_url(path='atom.xml') }}">Feed</a></nav>
+    {% block content %}{% endblock %}
+</body>
+
+</html>
